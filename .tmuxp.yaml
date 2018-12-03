@@ -1,0 +1,28 @@
+# vim:set sw=2 et:
+session_name: reply-environment
+environment:
+  DONT_CENSOR_LOGS: '1'
+windows:
+  - window_name: interactive
+    focus: true
+    layout: main-vertical
+    options:
+      other-pane-width: 80
+    panes:
+      - pane
+      - focus: true
+  - window_name: my-service
+    layout: even-vertical
+    panes:
+      - shell_command:
+        - cd my-service
+        - lein repl
+        - "(require 'ring.adapter.jetty)"
+        - "(require 'my-service.handler)"
+        - (def jetty-server (ring.adapter.jetty/run-jetty my-service.handler/app {:port 3010 :join? false}))
+  - window_name: postgres
+    layout: even-vertical
+    panes:
+      - docker run -it --rm -p 55432:5432 --name local-postgres postgres
+      - sleep 3 && psql -h localhost -p 55432 -U postgres
+

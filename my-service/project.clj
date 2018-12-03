@@ -4,5 +4,6 @@
                   [metosin/compojure-api "1.1.11"]]
    :ring {:handler my-service.handler/app}
    :uberjar-name "server.jar"
-   :profiles {:dev {:dependencies [[javax.servlet/javax.servlet-api "3.1.0"]]
+   :profiles {:dev {:dependencies [[ring/ring-jetty-adapter "1.6.3"]
+                                   [javax.servlet/javax.servlet-api "3.1.0"]]
                    :plugins [[lein-ring "0.12.0"]]}})
