@@ -1,5 +1,6 @@
 (ns my-service.handler
   (:require [compojure.api.sweet :refer :all]
+            [my-service.db :refer [next-number]]
             [ring.util.http-response :refer :all]
             [schema.core :as s]))
 
@@ -27,6 +28,12 @@
         :query-params [x :- Long, y :- Long]
         :summary "adds two numbers together"
         (ok {:result (+ x y)}))
+
+      (GET "/test-db" []
+        :return {:result Long}
+        :query-params [x :- Long]
+        :summary "increments x with the db"
+        (ok {:result (next-number x)}))
 
       (POST "/echo" []
         :return Pizza
